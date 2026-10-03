@@ -23,8 +23,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Cartograph",
-  description: "Repository dependency map",
+  title: "Cartograph — Deterministic Codebase Mapping",
+  description: "Parses public GitHub repositories into complete AST-resolved dependency maps.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -58,45 +58,70 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="min-h-full flex flex-col font-sans">
-        <ClerkProvider>
-          <header className="border-b border-[var(--panel-border)] bg-[var(--panel)] px-5 py-2 flex items-center justify-between transition-colors">
-            <div className="flex items-center gap-4">
+        <ClerkProvider
+          appearance={{
+            variables: {
+              colorPrimary: "#3b82f6",
+              borderRadius: "0.375rem",
+              fontFamily: "var(--font-geist-sans)",
+            },
+            elements: {
+              userButtonPopoverCard: "!bg-[var(--panel)] !border !border-[var(--panel-border)] !text-[var(--color-foreground)] shadow-xl",
+              userButtonPopoverMain: "!bg-[var(--panel)] !text-[var(--color-foreground)]",
+              userButtonPopoverFooter: "!bg-[var(--panel-elevated)] !border-t !border-[var(--panel-border)]",
+              userButtonPopoverActionButton: "!text-[var(--color-foreground)] hover:!bg-[var(--panel-elevated)]",
+              userButtonPopoverActionButtonText: "!text-[var(--color-foreground)]",
+              userButtonPopoverActionButtonIcon: "!text-[var(--color-muted)]",
+              userPreviewMainIdentifier: "!text-[var(--color-foreground)]",
+              userPreviewSecondaryIdentifier: "!text-[var(--color-muted)]",
+              organizationSwitcherPopoverCard: "!bg-[var(--panel)] !border !border-[var(--panel-border)] !text-[var(--color-foreground)] shadow-xl",
+              organizationSwitcherPopoverMain: "!bg-[var(--panel)] !text-[var(--color-foreground)]",
+              organizationSwitcherPopoverActions: "!bg-[var(--panel)]",
+              organizationSwitcherPopoverActionButton: "!text-[var(--color-foreground)] hover:!bg-[var(--panel-elevated)]",
+              organizationSwitcherTrigger:
+                "px-2.5 py-1 rounded text-xs font-sans border border-[var(--panel-border)] bg-[var(--panel)] hover:bg-[var(--panel-elevated)] text-[var(--color-foreground)] transition-colors cursor-pointer",
+              organizationPreviewTextContainer: "font-sans",
+              userButtonTrigger: "cursor-pointer rounded-full",
+            },
+          }}
+        >
+          <header className="border-b border-[var(--panel-border)] bg-[var(--panel)] px-4 sm:px-6 py-2.5 flex items-center justify-between transition-colors sticky top-0 z-40">
+            <div className="flex items-center gap-4 sm:gap-6">
               <Link
                 href="/"
-                className="font-mono text-xs font-semibold tracking-wider uppercase text-[var(--color-foreground)] hover:opacity-80 transition-opacity"
+                className="flex items-center gap-2 group text-[var(--color-foreground)] hover:opacity-85 transition-opacity"
               >
-                cartograph
+                <span className="w-2.5 h-2.5 rounded-[2px] bg-[var(--color-foreground)] inline-block transition-transform group-hover:scale-105" />
+                <span className="font-mono text-xs font-bold tracking-wider uppercase">
+                  cartograph
+                </span>
+                <span className="text-[10px] font-mono px-1.5 py-0.2 border border-[var(--panel-border)] text-[var(--color-muted)] rounded">
+                  ast
+                </span>
               </Link>
               <Show when="signed-in">
-                <div className="flex items-center text-xs font-mono">
+                <div className="flex items-center text-xs">
                   <OrganizationSwitcher
                     hidePersonal={false}
                     afterCreateOrganizationUrl="/"
                     afterSelectOrganizationUrl="/"
                     afterLeaveOrganizationUrl="/"
-                    appearance={{
-                      elements: {
-                        rootBox: "flex items-center",
-                        organizationSwitcherTrigger:
-                          "px-2 py-1 rounded text-xs font-mono border border-[var(--panel-border)] hover:bg-[var(--muted)]/10 text-[var(--color-foreground)] transition-colors",
-                      },
-                    }}
                   />
                 </div>
               </Show>
             </div>
 
-            <div className="flex items-center gap-3 text-xs font-mono">
+            <div className="flex items-center gap-3 text-xs">
               <ThemeToggle />
               <Show when="signed-out">
                 <SignInButton mode="modal">
-                  <button className="px-2.5 py-1 rounded border border-[var(--panel-border)] hover:bg-[var(--muted)]/10 text-[var(--color-foreground)] transition-colors">
-                    Sign In
+                  <button className="px-2.5 py-1 rounded border border-[var(--panel-border)] hover:bg-[var(--panel-elevated)] text-[var(--color-foreground)] font-sans transition-colors cursor-pointer text-xs">
+                    Sign in
                   </button>
                 </SignInButton>
                 <SignUpButton mode="modal">
-                  <button className="px-2.5 py-1 rounded bg-[var(--color-foreground)] text-[var(--color-background)] font-medium hover:opacity-90 transition-opacity">
-                    Sign Up
+                  <button className="px-2.5 py-1 rounded bg-[var(--color-foreground)] text-[var(--color-background)] font-sans font-medium hover:opacity-90 transition-opacity cursor-pointer text-xs">
+                    Sign up
                   </button>
                 </SignUpButton>
               </Show>

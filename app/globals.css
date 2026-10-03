@@ -1,31 +1,51 @@
 @import "tailwindcss";
 
 :root {
-  --background: #fbfbfb;
+  --background: #f8fafc;
   --foreground: #09090b;
   --panel: #ffffff;
-  --panel-border: #e4e4e7;
-  --muted: #71717a;
+  --panel-elevated: #f1f5f9;
+  --panel-border: #e2e8f0;
+  --panel-border-subtle: #edf2f7;
+  --muted: #64748b;
+  --muted-foreground: #475569;
   --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --status-complete: #10b981;
+  --status-parsing: #3b82f6;
+  --status-queued: #f59e0b;
+  --status-failed: #ef4444;
 }
 
 :root.dark,
 :root[data-theme="dark"] {
   --background: #09090b;
-  --foreground: #fafafa;
-  --panel: #111115;
-  --panel-border: #27272a;
-  --muted: #a1a1aa;
+  --foreground: #ededed;
+  --panel: #0d0d11;
+  --panel-elevated: #141419;
+  --panel-border: #1e1e24;
+  --panel-border-subtle: #16161c;
+  --muted: #80808b;
+  --muted-foreground: #a1a1aa;
   --accent: #3b82f6;
+  --accent-hover: #60a5fa;
+  --status-complete: #10b981;
+  --status-parsing: #3b82f6;
+  --status-queued: #f59e0b;
+  --status-failed: #ef4444;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-panel: var(--panel);
+  --color-panel-elevated: var(--panel-elevated);
   --color-panel-border: var(--panel-border);
+  --color-panel-border-subtle: var(--panel-border-subtle);
   --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -34,4 +54,78 @@ body {
   background-color: var(--background);
   color: var(--foreground);
   transition: background-color 150ms ease, color 150ms ease;
+  min-height: 100vh;
+}
+
+/* Adaptive Clerk theme harmonization across light and dark modes */
+.cl-userButtonPopoverCard,
+.cl-userButtonPopoverCard > div,
+.cl-userButtonPopoverMain,
+.cl-organizationSwitcherPopoverCard,
+.cl-organizationSwitcherPopoverCard > div,
+.cl-organizationSwitcherPopoverMain,
+.cl-card,
+.cl-popoverBox {
+  background-color: var(--panel) !important;
+  color: var(--color-foreground) !important;
+}
+
+.cl-userButtonPopoverCard,
+.cl-organizationSwitcherPopoverCard,
+.cl-card {
+  border: 1px solid var(--panel-border) !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2), 0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
+}
+
+.cl-userPreview,
+.cl-userButtonPopoverActions,
+.cl-organizationSwitcherPopoverActions {
+  background-color: transparent !important;
+}
+
+.cl-userButtonPopoverActionButton,
+.cl-organizationSwitcherPopoverActionButton {
+  background-color: transparent !important;
+  color: var(--color-foreground) !important;
+  transition: background-color 150ms ease !important;
+}
+
+.cl-userButtonPopoverActionButton:hover,
+.cl-organizationSwitcherPopoverActionButton:hover {
+  background-color: var(--panel-elevated) !important;
+}
+
+.cl-userButtonPopoverActionButtonText,
+.cl-organizationSwitcherPopoverActionButtonText {
+  color: var(--color-foreground) !important;
+}
+
+.cl-userButtonPopoverActionButtonIcon,
+.cl-organizationSwitcherPopoverActionButtonIcon {
+  color: var(--muted) !important;
+}
+
+.cl-userPreviewMainIdentifier {
+  color: var(--color-foreground) !important;
+  font-weight: 600 !important;
+}
+
+.cl-userPreviewSecondaryIdentifier {
+  color: var(--muted) !important;
+}
+
+.cl-userButtonPopoverFooter,
+.cl-organizationSwitcherPopoverFooter {
+  background-color: var(--panel-elevated) !important;
+  border-top: 1px solid var(--panel-border) !important;
+}
+
+.cl-userButtonPopoverFooter a,
+.cl-organizationSwitcherPopoverFooter a {
+  color: var(--muted) !important;
+}
+
+.cl-internal-1dauvpw,
+.cl-internal-1hp5nqm {
+  color: var(--color-foreground) !important;
 }

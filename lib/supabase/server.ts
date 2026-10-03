@@ -13,8 +13,16 @@ import { env } from "@/lib/env";
 export async function createServerSupabaseClient() {
   const { getToken } = await auth();
   
-  // Try retrieving a JWT configured for Supabase integration, falling back to default session token
-  const token = (await getToken({ template: "supabase" })) || (await getToken());
+  let token: string | null = null;
+  try {
+    token = await getToken({ template: "supabase" });
+  } catch {
+    token = null;
+  }
+
+  if (!token) {
+    token = await getToken();
+  }
 
   return createClient(env.supabase.url, env.supabase.anonKey, {
     global: {
